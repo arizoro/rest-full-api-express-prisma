@@ -43,6 +43,13 @@ model Addres {
   postal_code String @db.VarChar(100)
   contact_id Int
   contact Contact @relation(fields: [contact_id], references: [id])
+  // role Role default(user) example
 
   @@map("addresses")
 }
+
+// contoh input enum di prisma
+// enum Role {
+//   user
+//   admin
+// }

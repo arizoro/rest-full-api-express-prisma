@@ -33,10 +33,12 @@ const loginUser = async(req, res, next) => {
 const getUser = async (req, res, next) => {
     try {
         const username = req.user.username
+        const image_src = `${port}${req.user.image}`
         const result = await usersService.getUser(username)
         
         res.status(200).json({
-            data : result
+            data : result,
+            image_src : image_src
         })
     } catch (e) {
         next(e)
@@ -65,7 +67,7 @@ const updateUser = async(req, res , next) => {
                 console.log('berhasil di hapus')
             })
         }
-        
+
         res.status(200).json({
             data : result,
             old_image : old_image,
