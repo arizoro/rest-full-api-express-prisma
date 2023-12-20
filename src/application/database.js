@@ -1,5 +1,3 @@
-// const PrismaClient = require('@prisma/client')
-// const logger = require('./logging')
 import { PrismaClient } from '@prisma/client';
 import {logger} from './logging.js'
 

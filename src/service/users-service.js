@@ -24,12 +24,13 @@ const register = async (request) => {
   }
 
   user.password = await bcrypt.hash(user.password, 10);
-
+  console.log(user.image)
   return prismaClient.user.create({
     data: user,
     select: {
       username: true,
       name: true,
+      image: true
     },
   });
 };
@@ -83,9 +84,11 @@ const getUser = async (username) => {
     },
     select: {
       username: true,
-      name: true
+      name: true,
+      image : true
     }
   });
+
   if (!user) {
     throw new RessponseError(404, "User is not found");
   }
@@ -102,6 +105,7 @@ const updateUser = async (request) => {
     },
   });
 
+
   if (userInDatabase !== 1) {
     throw new RessponseError(404, "User not found");
   }
@@ -116,7 +120,11 @@ const updateUser = async (request) => {
     data.password = await bcrypt.hash(user.password, 10);
   }
 
-  return await prismaClient.user.update({
+  if(user.image){
+    data.image = user.image
+  }
+
+  const result = await prismaClient.user.update({
     where: {
       username: user.username,
     },
@@ -124,8 +132,11 @@ const updateUser = async (request) => {
     select: {
       username: true,
       name: true,
+      image : true
     },
   });
+
+  return result
 };
 
 const logout = async (username) => {

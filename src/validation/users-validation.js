@@ -3,7 +3,8 @@ import Joi from "joi"
 const registerUserValidation = Joi.object({
     username : Joi.string().max(100).required(),
     password : Joi.string().max(100).required(),
-    name : Joi.string().max(100).required()
+    name : Joi.string().max(100).required(),
+    image : Joi.string().max(255).optional()
 })
 
 const loginUserValidation = Joi.object({
@@ -15,8 +16,9 @@ const getUserValidation = Joi.string().max(100).required()
 
 const updateUserValidation = Joi.object({
     username : Joi.string().max(100).required(),
-    password : Joi.string().max(100).required().optional(),
-    name : Joi.string().max(100).required().optional()
+    password : Joi.string().max(100).optional(),
+    name : Joi.string().max(100).optional(),
+    image : Joi.string().max(255).optional()
 })
 
 export {

@@ -3,13 +3,16 @@ import userController from "../controller/user-controller.js"
 import { authMiddleware } from "../middleware/auth-middleware.js"
 import contactController from "../controller/contact-controller.js"
 import addressController from "../controller/address-controller.js"
+import { uploaded } from "../middleware/multer.js"
 
 const userRouter = new express.Router()
 userRouter.use(authMiddleware)
+userRouter.use('/image', express.static('public/images'))
+
 
 // User Api
-userRouter.get("/api/users/current", userController.getUser)
-userRouter.patch("/api/users/current", userController.updateUser)
+userRouter.get("/api/users/current",userController.getUser)
+userRouter.patch("/api/users/current",uploaded.single('image'),userController.updateUser)
 userRouter.delete("/api/users/logout", userController.logout)
 
 // Contact Api
