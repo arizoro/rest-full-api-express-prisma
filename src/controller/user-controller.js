@@ -5,15 +5,13 @@ const port = 'http://localhost:3000/image/'
 const register = async(req, res , next) => {
     try {
         console.log(req.file)
-        const image_src =`${port}${req.file.filename}`
         const image = req.file.filename
         const request = req.body
         request.image = image
         const result = await usersService.register(request)
         res.status(200).json({
-            data : result,
-            image_src : image_src
-        })
+            data : result
+            })
     } catch(e) {
         next(e)
     }
