@@ -33,12 +33,11 @@ const loginUser = async(req, res, next) => {
 const getUser = async (req, res, next) => {
     try {
         const username = req.user.username
-        const image_src = `${port}${req.user.image}`
         const result = await usersService.getUser(username)
+        result.image_src = `${port}${req.user.image}`
         
         res.status(200).json({
             data : result,
-            image_src : image_src
         })
     } catch (e) {
         next(e)
@@ -58,6 +57,7 @@ const updateUser = async(req, res , next) => {
         request.image = image
         
         const result = await usersService.updateUser(request)
+        result.image_src = image_src
 
         if(result.image){
             fs.unlink(`public/images/${old_image}`, function(err){
@@ -69,10 +69,8 @@ const updateUser = async(req, res , next) => {
         }
 
         res.status(200).json({
-            data : result,
-            old_image : old_image,
-            image_src : image_src
-        })
+            data : result
+            })
     } catch (e) {
         next(e)
     }
